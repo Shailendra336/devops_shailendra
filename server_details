@@ -1,0 +1,73 @@
+#!/bin/bash
+
+echo "====================================="
+echo "        SERVER INFORMATION"
+echo "====================================="
+
+echo -e "\nHostname:"
+hostname
+
+echo -e "\nServer Uptime:"
+uptime
+
+echo -e "\nCurrent Logged in Users:"
+who
+
+echo -e "\nKernel Version:"
+uname -r
+
+echo -e "\n====================================="
+echo "        OS INFORMATION"
+echo "====================================="
+
+if [ -f /etc/os-release ]; then
+cat /etc/os-release
+else
+uname -a
+fi
+
+echo -e "\n====================================="
+echo "        CPU INFORMATION"
+echo "====================================="
+
+lscpu | grep -E "Model name|CPU(s)|Thread|Core|Socket"
+
+echo -e "\n====================================="
+echo "        MEMORY INFORMATION"
+echo "====================================="
+
+free -h
+
+echo -e "\n====================================="
+echo "        STORAGE INFORMATION"
+echo "====================================="
+
+df -h
+
+echo -e "\nDisk Details:"
+lsblk
+
+echo -e "\n====================================="
+echo "        NETWORK INFORMATION"
+echo "====================================="
+
+echo -e "\nIP Address:"
+ip addr show | grep inet
+
+echo -e "\nRouting Table:"
+ip route
+
+echo -e "\nOpen Ports:"
+ss -tulnp
+
+echo -e "\n====================================="
+echo "        NETWORK CONNECTIONS"
+echo "====================================="
+
+netstat -ant | head -20
+
+echo -e "\n====================================="
+echo "        TOP MEMORY PROCESSES"
+echo "====================================="
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
